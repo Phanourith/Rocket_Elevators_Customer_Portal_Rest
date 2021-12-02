@@ -43,7 +43,7 @@ namespace Rocket_Elevators_REST_API
             // MySQL Connection String
 
             // NOTE: USE ACTUAL CONNECTION STRING IN CONNECTION FOR PRODUCTION WHEN DEPLOYING!!!
-            var connectionString = Environment.GetEnvironmentVariable("DEFAULT__ENVIRONMENT");
+            var connectionString =  @"server=codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com;userid=codeboxx;password=Codeboxx1!;database=LongNguyen;port=3306";
 
             // Replace with your server version and type.
             // Use 'MariaDbServerVersion' for MariaDB.
