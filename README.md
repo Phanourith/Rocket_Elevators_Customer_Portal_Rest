@@ -6,4 +6,5 @@ NOTE: for PATCH, update status (or any single field) using the following format:
                  [{"op": "replace", "path": "/status", "value": "Offline"}]
 
 #### Postman Link: https://www.getpostman.com/collections/30515379c2a8fcfcb4f0
+#### Link to the deployed version: https://rocket-elevator-rest.azurewebsites.net/api
 
