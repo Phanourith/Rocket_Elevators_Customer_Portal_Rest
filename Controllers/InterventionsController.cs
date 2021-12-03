@@ -16,6 +16,10 @@ namespace Rocket_Elevators_REST_API.Controllers{
         {
             _context = context;
         }
+        [HttpGet("all")]
+        public async Task<ActionResult<List<Intervention>>> getAllInterventions(){
+            return await _context.interventions.ToListAsync();
+        }
         [HttpGet("pending")]
         public async Task<ActionResult<List<Intervention>>> getPendingInterventions(){
             var interventions = await _context.interventions.Where(i => i.status == "Pending").ToListAsync();
@@ -67,6 +71,18 @@ namespace Rocket_Elevators_REST_API.Controllers{
             _context.interventions.Update(interventionToUpdate);
             _context.SaveChanges();
             return Content("Successfully updated status to In Progress " + interventionToUpdate.end_intervention);
+        }
+        [HttpPut("pending/{id}")]
+        public async Task<IActionResult> UpdateStatusPending(int id){
+            var interventionToUpdate = await _context.interventions.FindAsync(id);
+            if(interventionToUpdate == null){
+                return NotFound($"Intervention with Id = {id} not found");
+            }
+            interventionToUpdate.status = "Pending";
+            interventionToUpdate.result = "Incomplete";
+            _context.interventions.Update(interventionToUpdate);
+            _context.SaveChanges();
+            return Content("Successfully updated status to Pending ");
         }
 
     }
