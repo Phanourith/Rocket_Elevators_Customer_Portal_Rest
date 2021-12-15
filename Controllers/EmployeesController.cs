@@ -27,8 +27,8 @@ namespace Rocket_Elevators_REST_API.Controllers{
         }
 
         [HttpGet("{id}/bonus3")]
-        public async Task<ActionResult<String>> GetSpecificEmployee(int id){
-
+        public async Task<ActionResult> GetSpecificEmployee(int id){
+            string returnJson = "";
             var employee =  await _context.employees.FindAsync(id);
             var factInterventions = await _context2.fact_interventions.Where(c => c.employee_id == employee.id).ToListAsync();
             var returnString = "";
@@ -38,11 +38,14 @@ namespace Rocket_Elevators_REST_API.Controllers{
             }
             foreach(var factIntervention in factInterventions){
                 var building_detail = await _context.building_details.FindAsync(factIntervention.building_id);
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(building_detail);
+                returnJson = returnJson + jsonString;
 
-                returnString = returnString + factIntervention.ToString() + " building details: " + building_detail.information_key + " - " + building_detail.value + "\n";
+                // returnString = returnString + factIntervention.ToString() + " building details: " + building_detail.information_key + " - " + building_detail.value + "\n";
             }
+            return Content(returnJson, "application/json");
 
-            return returnString + " employee id: "+ employee.id;
+            // return returnString + " employee id: "+ employee.id;
 
         }
     }
