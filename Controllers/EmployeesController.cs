@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rocket_Elevators_REST_API.Models;
 using Microsoft.AspNetCore.JsonPatch;
+
 namespace Rocket_Elevators_REST_API.Controllers{
     [Route("api/[controller]")]
     [ApiController]
@@ -31,7 +32,7 @@ namespace Rocket_Elevators_REST_API.Controllers{
             string returnJson = "";
             var employee =  await _context.employees.FindAsync(id);
             var factInterventions = await _context2.fact_interventions.Where(c => c.employee_id == employee.id).ToListAsync();
-            var returnString = "";
+            
             if (employee == null)
             {
                 return NotFound();

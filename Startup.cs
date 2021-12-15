@@ -36,7 +36,7 @@ namespace Rocket_Elevators_REST_API
                     "5432",
                     "Codeboxx1!");
 
-            using (var conn = new NpgsqlConnection(connString));
+            using (var conn = new NpgsqlConnection(connString)) 
 
             services.AddDbContext<PostgreApplicationContext>(options => options.UseNpgsql(connString));
 
