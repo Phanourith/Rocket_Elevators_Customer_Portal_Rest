@@ -8,3 +8,9 @@ NOTE: for PATCH, update status (or any single field) using the following format:
 #### Postman Link: https://www.getpostman.com/collections/30515379c2a8fcfcb4f0
 #### Link to the deployed version: https://rocket-elevator-rest.azurewebsites.net/api
 
+
+
+To get batteries: https://rocketelevatorrestportal.azurewebsites.net/api/customers/claudie@cronin.name/batteries
+To get columns: https://rocketelevatorrestportal.azurewebsites.net/api/customers/claudie@cronin.name/columns
+To get elevators: https://rocketelevatorrestportal.azurewebsites.net/api/customers/claudie@cronin.name/elevators
+
