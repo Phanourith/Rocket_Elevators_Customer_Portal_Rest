@@ -11,6 +11,8 @@ NOTE: for PATCH, update status (or any single field) using the following format:
 
 
 To get batteries: https://rocketelevatorrestportal.azurewebsites.net/api/customers/claudie@cronin.name/batteries
+
 To get columns: https://rocketelevatorrestportal.azurewebsites.net/api/customers/claudie@cronin.name/columns
+
 To get elevators: https://rocketelevatorrestportal.azurewebsites.net/api/customers/claudie@cronin.name/elevators
 
