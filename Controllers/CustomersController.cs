@@ -66,6 +66,22 @@ namespace Rocket_Elevators_REST_API.Controllers
                 return Content(returnJson, "application/json");
             }
         }
+
+        [HttpGet("{email}/info")]
+        public async Task<ActionResult> getCustomer(String email)
+        {
+            var customer = await _context.customers.Where(e => e.email_of_the_company_contact == email).FirstOrDefaultAsync();
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
+                return Content(jsonString, "application/json");
+            }
+        }
+
         [HttpGet("{email}/columns")]
         public async Task<ActionResult> getColumns(String email)
         {
