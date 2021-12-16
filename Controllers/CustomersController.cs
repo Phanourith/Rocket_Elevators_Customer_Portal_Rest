@@ -31,6 +31,39 @@ namespace Rocket_Elevators_REST_API.Controllers
             }
 
         }
+
+
+        [HttpGet("{email}/buildings")]
+        public async Task<ActionResult> getBuildings(String email)
+        {
+            string returnJson = "";
+            var customer = await _context.customers.Where(e => e.email_of_the_company_contact == email).FirstOrDefaultAsync();
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var buildings = await _context.buildings.Where(b => b.customer_id == customer.id).ToListAsync();
+                foreach (var building in buildings)
+                {   
+
+                     var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(building);
+                        if (returnJson == "")
+                        {
+                            returnJson = jsonString;
+                        }
+                        else
+                        {
+                            returnJson = returnJson + ", " + jsonString;
+                        }
+
+                }
+                returnJson = "[" + returnJson + "]";
+                return Content(returnJson, "application/json");
+            }
+        }
+
         [HttpGet("{email}/batteries")]
         public async Task<ActionResult> getBatteries(String email)
         {
@@ -80,6 +113,18 @@ namespace Rocket_Elevators_REST_API.Controllers
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
                 return Content(jsonString, "application/json");
             }
+        }
+
+        [HttpPatch("{email}")]
+        public async Task<IActionResult> PatchProfile(string email, [FromBody] JsonPatchDocument<Customer> customerPatch)
+        {
+            var customer = await _context.customers.Where(e => e.email_of_the_company_contact == email).FirstOrDefaultAsync();
+
+            customerPatch.ApplyTo(customer);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         [HttpGet("{email}/columns")]
@@ -160,5 +205,64 @@ namespace Rocket_Elevators_REST_API.Controllers
                 return Content(returnJson, "application/json");
             }
         }
+
+
+        [HttpGet("email={email}&elevator_id={elevator_id}")]
+        public async Task<IActionResult> GetElevatorInvervention(String email, int elevator_id){
+    
+            var customer = await _context.customers.Where(e => e.email_of_the_company_contact == email).FirstOrDefaultAsync();
+            var elevator = await _context.elevators.Where(e => e.id == elevator_id).FirstOrDefaultAsync();
+            var column = await _context.columns.Where(c => c.id == elevator.column_id).FirstOrDefaultAsync();
+            var battery = await _context.batteries.Where(b => b.id == column.battery_id).FirstOrDefaultAsync();
+            var building = await _context.buildings.Where(b => b.id == battery.building_id).FirstOrDefaultAsync();
+            var newIntervention = new Intervention{
+                author = customer.id,
+                building_id = building.id,
+                battery_id = battery.id,
+                column_id = column.id,
+                elevator_id = elevator.id,
+                customer_id = customer.id,
+            };
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(newIntervention);
+            return Content(jsonString, "application/json");
+        }
+
+        [HttpGet("email={email}&column_id={column_id}")]
+        public async Task<IActionResult> GetColumnIntervention(String email, int column_id){
+    
+            var customer = await _context.customers.Where(e => e.email_of_the_company_contact == email).FirstOrDefaultAsync();
+            
+            var column = await _context.columns.Where(c => c.id == column_id).FirstOrDefaultAsync();
+            var battery = await _context.batteries.Where(b => b.id == column.battery_id).FirstOrDefaultAsync();
+            var building = await _context.buildings.Where(b => b.id == battery.building_id).FirstOrDefaultAsync();
+            var newIntervention = new Intervention{
+                author = customer.id,
+                building_id = building.id,
+                battery_id = battery.id,
+                column_id = column.id,
+                customer_id = customer.id,
+            };
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(newIntervention);
+            return Content(jsonString, "application/json");
+        }
+
+        [HttpGet("email={email}&battery_id={battery_id}")]
+        public async Task<IActionResult> GetBatteryIntervention(String email, int battery_id){
+    
+            var customer = await _context.customers.Where(e => e.email_of_the_company_contact == email).FirstOrDefaultAsync();
+            
+            var battery = await _context.batteries.Where(b => b.id == battery_id).FirstOrDefaultAsync();
+            var building = await _context.buildings.Where(b => b.id == battery.building_id).FirstOrDefaultAsync();
+            var newIntervention = new Intervention{
+                author = customer.id,
+                building_id = building.id,
+                battery_id = battery.id,
+                customer_id = customer.id,
+            };
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(newIntervention);
+            return Content(jsonString, "application/json");
+        }
+
+       
     }
 }

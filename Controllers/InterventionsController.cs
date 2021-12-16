@@ -85,6 +85,28 @@ namespace Rocket_Elevators_REST_API.Controllers{
             return Content("Successfully updated status to Pending ");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> PostElevatorInvervention([FromBody] Intervention intervention){
+
+            
+            var newIntervention = new Intervention{
+                author = intervention.author,
+                building_id = intervention.building_id,
+                battery_id = intervention.battery_id,
+                column_id = intervention.column_id,
+                elevator_id = intervention.elevator_id,
+                customer_id = intervention.customer_id,
+                report = intervention.report,
+                status = "Pending",
+                result = "Incomplete",
+                created_at = DateTime.Now,
+            };
+
+            _context.interventions.Add(newIntervention);
+            await _context.SaveChangesAsync();
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(newIntervention);
+            return Content(jsonString, "application/json");
+        }
     }
 
 }
