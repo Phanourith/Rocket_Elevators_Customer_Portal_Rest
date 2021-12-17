@@ -54,6 +54,23 @@ namespace Rocket_Elevators_REST_API.Controllers
             return Content("Successfully updated column " + column.id);
         }
 
+        [HttpGet("battery_id={battery_id}")]
+        public async Task<ActionResult> getBatteries(int battery_id)
+        {
+
+            List<Column> ColumnList = new List<Column>();
+            ColumnList = await _context.columns.Where(b => b.battery_id == battery_id).ToListAsync();
+
+            if (ColumnList == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(ColumnList);
+            }
+        }
+
 
         //-----------------------------------------------------
         // END
