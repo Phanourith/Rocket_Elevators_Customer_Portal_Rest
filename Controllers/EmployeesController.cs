@@ -26,6 +26,18 @@ namespace Rocket_Elevators_REST_API.Controllers{
         {
             return await _context.employees.ToListAsync();
         }
+        [HttpGet("login/{email}")]
+        public async Task<ActionResult<Employee>> loginEmployee(string email){
+            var employee = await _context.employees.Where(e => e.email == email).FirstOrDefaultAsync();
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return employee;
+            }
+        }
 
         [HttpGet("{id}/bonus3")]
         public async Task<ActionResult> GetSpecificEmployee(int id){

@@ -55,6 +55,14 @@ namespace Rocket_Elevators_REST_API.Controllers
 
             return elevator;
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Elevator>> getElevator(int id){
+            var elevator = await _context.elevators.FindAsync(id);
+            if(elevator == null){
+                return NotFound();
+            }
+            return elevator;
+        }
 
         // PATCH: api/Elevators/5
         // update status (or any single field) of an elevator using the following format:

@@ -43,7 +43,7 @@ namespace Rocket_Elevators_REST_API
             // MySQL Connection String
 
             // NOTE: USE ACTUAL CONNECTION STRING IN CONNECTION FOR PRODUCTION WHEN DEPLOYING!!!
-            var connectionString =  @"server=codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com;userid=codeboxx;password=Codeboxx1!;database=LongNguyen;port=3306";
+            var connectionString =  @"server=db-mysql-nyc3-70101-do-user-10631197-0.b.db.ondigitalocean.com;userid=doadmin;password=sjNxhA9AVidUmB78;database=LongNguyen;port=25060";
 
             // Replace with your server version and type.
             // Use 'MariaDbServerVersion' for MariaDB.
